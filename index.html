@@ -345,7 +345,10 @@ function openShop(){
       const total=unit*n,s=b.s||64;
       if(total>emeralds){toast('Zu wenig Smaragde. Verhandle oder wähle weniger Stacks.');return false}
       buyerName=name;emeralds-=total;owned[b.n]=(owned[b.n]||0)+n*s;$('#em',el).textContent=emeralds;renderInv();
-      store.add('orders',{name,item:b.n,price:total,unit,stacks:n,size:s,note,time:Date.now()}).catch(()=>toast('Bestellung konnte nicht gespeichert werden'));
+      const qty=s>1?n+' Stack'+(n>1?'s':'')+' ('+n*s+' Stück)':n+'×';
+      store.add('orders',{name,item:b.n,price:total,unit,stacks:n,size:s,note,time:Date.now()})
+        .catch(()=>store.add('orders',{name,item:qty+' '+b.n+(note?' – Wunsch: '+note:''),price:total,time:Date.now()}))
+        .catch(()=>toast('Bestellung konnte nicht gespeichert werden'));
       toast(`${s>1?n+' Stack'+(n>1?'s':''):n+'×'} ${b.n} gekauft von ${name} für ${total} Smaragde`);
       return true;
     }
@@ -432,7 +435,7 @@ function openShop(){
 
 /* ---------- Speicher für Bestellungen & Bewertungen ---------- */
 // Leer lassen = alles nur im eigenen Browser. Mit Firebase-Adresse = für alle sichtbar.
-const DB_URL='https://nexespress-default-rtdb.europe-west1.firebasedatabase.app';
+const DB_URL='https://express-datab-default-rtdb.europe-west1.firebasedatabase.app';
 let buyerName='';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const lsRead=p=>{try{return JSON.parse(localStorage.getItem('nx_'+p)||'{}')}catch(e){return{}}};
