@@ -220,6 +220,58 @@ add('Holz',[['Eichenstamm','#6b5233',3],['Eichenbretter','#a8834e',1],['Birkenst
 add('Erze',[['Kohleerz','#2b2b2b',4],['Kohleblock','#111',12],['Eisenerz','#d8af93',8],['Eisenblock','#d9d9d9',45],['Kupfererz','#c8794e',6],['Kupferblock','#c36a47',40],['Goldblock','#f8d838',150],['Golderz','#fcee4b',30],['Redstone-Block','#aa1010',40],['Redstone-Erz','#d02020',20],['Lapislazuli-Block','#1d4aa8',50],['Lapis-Erz','#2a52be',30],['Smaragdblock','#17c653',250],['Smaragderz','#17dd62',60],['Diamantblock','#4aedd9',400],['Diamanterz','#5decf5',100],['Netheritblock','#43393a',900],['Antiker Schutt','#6e4a3a',200],['Quarzblock','#ebe5de',30],['Leuchtstein','#f9d66b',25],['Seelaterne','#4ac8c0',20],['Leuchtfeuer','#5ff0f0',500]]);
 add('Wolle & Glas',[['Weiße Wolle','#e9ecec',2],['Orange Wolle','#f07613',2],['Magenta Wolle','#bd44b3',2],['Hellblaue Wolle','#3aafd9',2],['Gelbe Wolle','#f8c527',2],['Limettenfarbene Wolle','#70b919',2],['Rosa Wolle','#ed8dac',2],['Graue Wolle','#3e4447',2],['Hellgraue Wolle','#8e8e86',2],['Türkise Wolle','#158991',2],['Violette Wolle','#792aac',2],['Blaue Wolle','#35399d',2],['Braune Wolle','#724728',2],['Grüne Wolle','#546d1b',2],['Rote Wolle','#a12722',2],['Schwarze Wolle','#141519',2],['Glas','#c0e8f0',3],['Getöntes Glas','#46405a',6],['Glasscheibe','#b0dce8',1],['Laterne','#d9a640',6],['Fackel','#f5a623',1],['Kerze','#e8dcc0',3],['Teppich','#e9ecec',1],['Bett','#a12722',12]]);
 add('Nether & Ende',[['Netherrack','#6f3636',1],['Seelensand','#52412f',3],['Seelenerde','#4a3a2a',3],['Magma-Block','#a8421a',10],['Glowstone-Staub-Block','#f9d66b',25],['Netherziegel','#2f1519',4],['Rote Netherziegel','#4b1517',5],['Nethertor-Block','#7a2ec8',30],['Schwarzstein','#2c2630',4],['Polierter Schwarzstein','#352f3a',5],['Basalt','#4d4d52',3],['Warzenblock','#8c1f1a',6],['Wirrwarzenblock','#1b8f8a',6],['Endstein','#dfe0a8',6],['Endsteinziegel','#e5e6b4',7],['Purpurblock','#a678a6',8],['Purpursäule','#b088b0',9],['Endportalrahmen','#3f6d5a',500],['Drachenei','#0e0a17',9999],['Spawner','#1d2a38',2000],['Befehlsblock','#c3855a',5000],['Bedrock','#555',99999]]);
+/* ---------- Alle weiteren Items & Blöcke (automatisch erzeugt) ---------- */
+// Preise gelten PRO STACK. s = Stackgröße (64, 16 oder 1). t = Texturpfad unter textures/
+B.forEach(b=>b.s=b.s||64);B.find(b=>b.n==='Bett').s=1;
+const have=new Set(B.map(b=>b.n));
+const G=(c,n,col,p,s,t)=>{if(have.has(n))return;have.add(n);B.push({n,col,c,p,s:s||64,t})};
+const L=(c,a)=>a.forEach(([n,col,p,t,s])=>G(c,n,col,p,s,t));
+const CL=[['weiß','#e9ecec','white'],['orange','#f07613','orange'],['magenta','#bd44b3','magenta'],['hellblau','#3aafd9','light_blue'],['gelb','#f8c527','yellow'],['limette','#70b919','lime'],['rosa','#ed8dac','pink'],['grau','#3e4447','gray'],['hellgrau','#8e8e86','light_gray'],['türkis','#158991','cyan'],['violett','#792aac','purple'],['blau','#35399d','blue'],['braun','#724728','brown'],['grün','#546d1b','green'],['rot','#a12722','red'],['schwarz','#141519','black']];
+CL.forEach(([n,col,id])=>{
+  G('Farbige Blöcke',`Beton (${n})`,col,2,64,`block/${id}_concrete`);
+  G('Farbige Blöcke',`Betonpulver (${n})`,col,2,64,`block/${id}_concrete_powder`);
+  G('Farbige Blöcke',`Terrakotta (${n})`,col,3,64,`block/${id}_terracotta`);
+  G('Farbige Blöcke',`Glasierte Terrakotta (${n})`,col,5,64,`block/${id}_glazed_terracotta`);
+  G('Farbige Blöcke',`Shulkerkiste (${n})`,col,60,1,`block/${id}_shulker_box`);
+  G('Wolle & Glas',`Buntglas (${n})`,col,3,64,`block/${id}_stained_glass`);
+  G('Wolle & Glas',`Buntglasscheibe (${n})`,col,1,64,`block/${id}_stained_glass`);
+  G('Wolle & Glas',`Teppich (${n})`,col,1,64,`block/${id}_wool`);
+  G('Wolle & Glas',`Bett (${n})`,col,12,1,`item/${id}_bed`);
+  G('Wolle & Glas',`Kerze (${n})`,col,3,64,`block/${id}_candle`);
+  G('Wolle & Glas',`Banner (${n})`,col,8,16,`item/${id}_banner`);
+  G('Wolle & Glas',`Farbstoff (${n})`,col,2,64,`item/${id}_dye`);
+});
+const WD=[['Eichen','#a8834e','oak'],['Fichten','#7a5a35','spruce'],['Birken','#c8b878','birch'],['Dschungel','#b0804f','jungle'],['Akazien','#ba5d2f','acacia'],['Schwarzeichen','#3c2a18','dark_oak'],['Mangroven','#7a2f35','mangrove'],['Kirsch','#e2b3b6','cherry'],['Bambus','#c8b04a','bamboo'],['Karmesin','#7a2a50','crimson'],['Wirr','#2a7f7a','warped']];
+WD.forEach(([n,col,id],i)=>{
+  const pl=`block/${id}_planks`;
+  G('Holz',`${n}-Treppe`,col,2,64,pl);G('Holz',`${n}-Stufe`,col,1,64,pl);G('Holz',`${n}-Zaun`,col,2,64,pl);
+  G('Holz',`${n}-Zauntor`,col,3,64,pl);G('Holz',`${n}-Tür`,col,3,64,`item/${id}_door`);
+  G('Holz',`${n}-Falltür`,col,3,64,`block/${id}_trapdoor`);G('Holz',`${n}-Schild`,col,3,16,`item/${id}_sign`);
+  G('Holz',`${n}-Knopf`,col,1,64,pl);G('Holz',`${n}-Druckplatte`,col,2,64,pl);
+  G('Holz',`Entrindeter ${n}-Stamm`,col,3,64,i==8?'block/stripped_bamboo_block':`block/stripped_${id}_${i>8?'stem':'log'}`);
+  if(i<8){G('Holz',`${n}-Boot`,col,6,1,`item/${id}_boat`);G('Natur',`${n}-Blätter`,'#4a8a2a',2,64,`block/${id}_leaves`);G('Natur',`${n}-Setzling`,'#4a8a2a',2,64,`block/${id}_sapling`)}
+  if(i==8)G('Holz','Bambusfloß',col,6,1,'item/bamboo_raft');
+});
+const SS=[['Bruchstein','#6f6f6f','cobblestone'],['Moosiger Bruchstein','#5f7a5a','mossy_cobblestone'],['Stein','#7d7d7d','stone'],['Steinziegel','#777','stone_bricks'],['Ziegelstein','#9a4f3f','bricks'],['Sandstein','#d8cb8f','sandstone'],['Roter Sandstein','#b45a22','red_sandstone'],['Granit','#996a56','granite'],['Diorit','#bdbdbd','diorite'],['Andesit','#868686','andesite'],['Quarz','#ebe5de','quartz_block_side'],['Schwarzstein','#2c2630','blackstone'],['Netherziegel','#2f1519','nether_bricks'],['Prismarin','#5ba6a0','prismarine'],['Deepslate-Bruchstein','#4a4a50','cobbled_deepslate'],['Endsteinziegel','#e5e6b4','end_stone_bricks'],['Purpur','#a678a6','purpur_block'],['Schlammziegel','#8a6a50','mud_bricks'],['Tuffstein','#6c6e63','tuff'],['Poliertes Andesit','#8a8a8a','polished_andesite'],['Poliertes Granit','#a07060','polished_granite'],['Poliertes Diorit','#c8c8c8','polished_diorite'],['Deepslate-Ziegel','#444450','deepslate_bricks']];
+SS.forEach(([n,col,id])=>{G('Stein',n,col,2,64,'block/'+id);G('Stein',`${n}-Treppe`,col,2,64,'block/'+id);G('Stein',`${n}-Stufe`,col,1,64,'block/'+id);G('Stein',`${n}-Mauer`,col,2,64,'block/'+id)});
+L('Stein',[['Geschnittenes Kupfer','#c36a47',8,'block/cut_copper'],['Angelaufenes Kupfer','#a0805a',8,'block/exposed_copper'],['Verwittertes Kupfer','#5a9a7a',8,'block/weathered_copper'],['Oxidiertes Kupfer','#3aa08a',8,'block/oxidized_copper'],['Kalzit','#e8e4dc',4,'block/calcite'],['Glatter Basalt','#4a4a50',3,'block/smooth_basalt']]);
+[['Kohleerz','coal','#2b2b2b',5],['Eisenerz','iron','#d8af93',9],['Kupfererz','copper','#c8794e',7],['Golderz','gold','#fcee4b',33],['Redstone-Erz','redstone','#d02020',22],['Lapis-Erz','lapis','#2a52be',33],['Smaragderz','emerald','#17dd62',66],['Diamanterz','diamond','#5decf5',110]].forEach(([n,id,col,p])=>G('Erze','Deepslate-'+n,col,p,64,`block/deepslate_${id}_ore`));
+L('Erze',[['Nether-Golderz','#fcee4b',30,'block/nether_gold_ore'],['Nether-Quarzerz','#ebe5de',12,'block/nether_quartz_ore'],['Rohes-Eisen-Block','#d8af93',40,'block/raw_iron_block'],['Rohes-Gold-Block','#fcee4b',130,'block/raw_gold_block'],['Rohes-Kupfer-Block','#c8794e',30,'block/raw_copper_block']]);
+L('Natur',[['Schlamm','#4a3a3a',2,'block/mud'],['Wurzelerde','#8a6a4a',3,'block/rooted_dirt'],['Pilzlicht','#f5a050',8,'block/shroomlight'],['Karmesin-Nylium','#a02a50',5,'block/crimson_nylium'],['Wirr-Nylium','#2a8f8a',5,'block/warped_nylium'],['Erdpfad','#9a7a4a',2,'block/dirt_path_top'],['Skulk','#0a2a3a',8,'block/sculk']]);
+L('Pflanzen',[['Löwenzahn','#f8d838',1,'block/dandelion'],['Mohn','#d02020',1,'block/poppy'],['Blaue Orchidee','#2a8ad8',2,'block/blue_orchid'],['Zierlauch','#a678d8',2,'block/allium'],['Porzellansternchen','#e8e8f0',2,'block/azure_bluet'],['Rote Tulpe','#d03030',1,'block/red_tulip'],['Orange Tulpe','#e8801a',1,'block/orange_tulip'],['Weiße Tulpe','#f0f0f0',1,'block/white_tulip'],['Rosa Tulpe','#ed8dac',1,'block/pink_tulip'],['Margerite','#f0f0e0',1,'block/oxeye_daisy'],['Kornblume','#4a6ad8',1,'block/cornflower'],['Maiglöckchen','#f0f8f0',2,'block/lily_of_the_valley'],['Wither-Rose','#1a1a1a',20,'block/wither_rose'],['Sonnenblume','#f8c527',2,'block/sunflower_front'],['Flieder','#c880d8',2,'block/lilac_top'],['Rosenstrauch','#d02040',2,'block/rose_bush_top'],['Pfingstrose','#ed8dac',2,'block/peony_top'],['Farn','#4a8a2a',1,'block/fern'],['Hohes Gras','#5d9b3a',1,'block/tall_grass_top'],['Ranken','#4a8a2a',1,'block/vine'],['Lilienblatt','#2a7a2a',2,'block/lily_pad'],['Seetang','#2f6a2a',1,'item/kelp'],['Seegras','#3a8a3a',1,'item/seagrass'],['Bambus','#8ab02a',1,'item/bamboo'],['Brauner Pilz','#8a6a4a',2,'block/brown_mushroom'],['Roter Pilz','#d02020',2,'block/red_mushroom'],['Brauner Riesenpilz','#8a6a4a',3,'block/brown_mushroom_block'],['Roter Riesenpilz','#d02020',3,'block/red_mushroom_block'],['Pilzstiel','#e8e0d0',3,'block/mushroom_stem'],['Azalee','#4a8a2a',4,'block/azalea_top'],['Blühende Azalee','#e08ac0',5,'block/flowering_azalea_top'],['Großes Tropfblatt','#4a8a2a',4,'block/big_dripleaf_top'],['Hängende Wurzeln','#8a6a4a',2,'block/hanging_roots'],['Leuchtflechte','#8ac8a0',3,'block/glow_lichen'],['Sporenblüte','#e060a0',6,'block/spore_blossom'],['Röhrenkorallenblock','#3060d8',4,'block/tube_coral_block'],['Hirnkorallenblock','#d060a0',4,'block/brain_coral_block'],['Blasenkorallenblock','#a030c0',4,'block/bubble_coral_block'],['Feuerkorallenblock','#c03030',4,'block/fire_coral_block'],['Hornkorallenblock','#d8c040',4,'block/horn_coral_block']]);
+const TM=[['Holz','wooden','#a8834e',1],['Stein','stone','#7d7d7d',1.5],['Eisen','iron','#d9d9d9',5],['Gold','golden','#f8d838',6],['Diamant','diamond','#4aedd9',25],['Netherit','netherite','#43393a',60]];
+const TL=[['Schwert','sword',2,'Waffen & Rüstung'],['Spitzhacke','pickaxe',3,'Werkzeuge'],['Axt','axe',3,'Werkzeuge'],['Schaufel','shovel',1,'Werkzeuge'],['Hacke','hoe',2,'Werkzeuge']];
+TM.forEach(([n,id,col,f])=>TL.forEach(([t,tid,k,c])=>G(c,`${n}-${t}`,col,Math.max(1,Math.round(f*k)),1,`item/${id}_${tid}`)));
+const AM=[['Leder','leather','#8a5a35',3],['Kette','chainmail','#9a9a9a',8],['Eisen','iron','#d9d9d9',10],['Gold','golden','#f8d838',12],['Diamant','diamond','#4aedd9',50],['Netherit','netherite','#43393a',120]];
+const AP=[['Helm','helmet',1],['Brustpanzer','chestplate',2],['Hose','leggings',1.6],['Stiefel','boots',.8]];
+AM.forEach(([n,id,col,f])=>AP.forEach(([t,tid,k])=>G('Waffen & Rüstung',`${n}-${t}`,col,Math.max(1,Math.round(f*k)),1,`item/${id}_${tid}`)));
+L('Waffen & Rüstung',[['Bogen','#8a6a3a',6,'item/bow',1],['Armbrust','#6a5a3a',10,'item/crossbow_standard',1],['Pfeil','#aaa',1,'item/arrow'],['Dreizack','#2a9d8f',200,'item/trident',1],['Streitkolben','#c8c8c8',300,'item/mace',1],['Schildkrötenhelm','#3a9a3a',20,'item/turtle_helmet',1],['Elytra','#8a8a9a',500,'item/elytra',1],['Totem der Unsterblichkeit','#f8d838',200,'item/totem_of_undying',1],['Wolfsrüstung','#aaa',20,'item/wolf_armor',1],['Eisen-Pferderüstung','#d9d9d9',30,'item/iron_horse_armor',1],['Gold-Pferderüstung','#f8d838',40,'item/golden_horse_armor',1],['Diamant-Pferderüstung','#4aedd9',80,'item/diamond_horse_armor',1],['Sattel','#8a5a35',15,'item/saddle',1]]);
+L('Werkzeuge',[['Angel','#8a6a3a',4,'item/fishing_rod',1],['Schere','#ccc',6,'item/shears',1],['Feuerzeug','#555',5,'item/flint_and_steel',1],['Kompass','#aaa',8,'item/compass_16'],['Uhr','#f8d838',8,'item/clock_00'],['Eimer','#ccc',5,'item/bucket',16],['Wassereimer','#3a6fd8',6,'item/water_bucket',1],['Lavaeimer','#e8601a',8,'item/lava_bucket',1],['Milcheimer','#fff',6,'item/milk_bucket',1],['Karte','#d8c890',4,'item/map'],['Leine','#8a6a3a',3,'item/lead'],['Namensschild','#d8c890',5,'item/name_tag'],['Pinsel','#c8a06a',3,'item/brush',1],['Fernrohr','#c36a47',10,'item/spyglass',1],['Karottenangel','#d9871a',6,'item/carrot_on_a_stick',1],['Wirrpilz-Angel','#2a7f7a',6,'item/warped_fungus_on_a_stick',1],['Rückrufkompass','#3aafd9',100,'item/recovery_compass']]);
+L('Nahrung',[['Apfel','#d02020',2,'item/apple'],['Goldener Apfel','#f8d838',40,'item/golden_apple'],['Verzauberter Goldapfel','#f8d838',400,'item/golden_apple'],['Brot','#c8a062',2,'item/bread'],['Steak','#8a4a2a',3,'item/cooked_beef'],['Rohes Rindfleisch','#c85050',2,'item/beef'],['Gebratenes Schweinefleisch','#b0703a',3,'item/cooked_porkchop'],['Rohes Schweinefleisch','#e89090',2,'item/porkchop'],['Gebratenes Hähnchen','#c8903a',3,'item/cooked_chicken'],['Rohes Hähnchen','#e8b0a0',2,'item/chicken'],['Gebratener Hammel','#9a5a3a',3,'item/cooked_mutton'],['Rohes Hammelfleisch','#c85a5a',2,'item/mutton'],['Gebratenes Kaninchen','#b0803a',3,'item/cooked_rabbit'],['Rohes Kaninchen','#e0a090',2,'item/rabbit'],['Gebratener Kabeljau','#c8a070',3,'item/cooked_cod'],['Roher Kabeljau','#c8b090',2,'item/cod'],['Gebratener Lachs','#e07050',3,'item/cooked_salmon'],['Roher Lachs','#d05a50',2,'item/salmon'],['Tropenfisch','#f07613',3,'item/tropical_fish'],['Kugelfisch','#d8c040',4,'item/pufferfish'],['Karotte','#e8801a',1,'item/carrot'],['Goldene Karotte','#f8c527',12,'item/golden_carrot'],['Kartoffel','#c8a060',1,'item/potato'],['Ofenkartoffel','#c8903a',2,'item/baked_potato'],['Giftige Kartoffel','#8aa040',1,'item/poisonous_potato'],['Rote Bete','#a02040',1,'item/beetroot'],['Rübensuppe','#a02040',4,'item/beetroot_soup',1],['Pilzsuppe','#b08a6a',4,'item/mushroom_stew',1],['Kaninchenragout','#a0703a',6,'item/rabbit_stew',1],['Kuchen','#f0e8d8',8,'item/cake',1],['Keks','#c8903a',1,'item/cookie'],['Kürbiskuchen','#d9871a',3,'item/pumpkin_pie'],['Melonenscheibe','#d04050',1,'item/melon_slice'],['Glitzernde Melonenscheibe','#f8c527',10,'item/glistering_melon_slice'],['Süßbeeren','#c03040',1,'item/sweet_berries'],['Leuchtbeeren','#e8a830',2,'item/glow_berries'],['Getrockneter Seetang','#2f4a2a',1,'item/dried_kelp'],['Honigflasche','#e8a21f',4,'item/honey_bottle',16],['Ei','#e8dcc0',1,'item/egg',16],['Weizen','#d8b84a',1,'item/wheat'],['Zucker','#fff',1,'item/sugar'],['Kakaobohnen','#6a3a1a',1,'item/cocoa_beans'],['Weizensamen','#7a9a2a',1,'item/wheat_seeds'],['Kürbiskerne','#d8c080',1,'item/pumpkin_seeds'],['Melonenkerne','#3a3a2a',1,'item/melon_seeds'],['Rote-Bete-Samen','#a02040',1,'item/beetroot_seeds'],['Verrottetes Fleisch','#8a6a3a',1,'item/rotten_flesh'],['Spinnenauge','#8a2030',2,'item/spider_eye'],['Chorusfrucht','#a678a6',4,'item/chorus_fruit'],['Zuckerrohr','#8ac85a',1,'item/sugar_cane'],['Schneeball','#fff',1,'item/snowball',16]]);
+L('Materialien',[['Kohle','#222',2,'item/coal'],['Holzkohle','#3a3030',2,'item/charcoal'],['Eisenbarren','#d9d9d9',6,'item/iron_ingot'],['Goldbarren','#f8d838',15,'item/gold_ingot'],['Kupferbarren','#c36a47',5,'item/copper_ingot'],['Netheritbarren','#43393a',100,'item/netherite_ingot'],['Netheritschrott','#6e4a3a',40,'item/netherite_scrap'],['Diamant','#4aedd9',45,'item/diamond'],['Smaragd','#17c653',28,'item/emerald'],['Lapislazuli','#1d4aa8',5,'item/lapis_lazuli'],['Redstone-Staub','#d02020',3,'item/redstone'],['Netherquarz','#ebe5de',4,'item/quartz'],['Amethystscherbe','#8a62c8',4,'item/amethyst_shard'],['Eisennugget','#d9d9d9',1,'item/iron_nugget'],['Goldnugget','#f8d838',2,'item/gold_nugget'],['Rohes Eisen','#d8af93',4,'item/raw_iron'],['Rohes Gold','#fcee4b',12,'item/raw_gold'],['Rohes Kupfer','#c8794e',3,'item/raw_copper'],['Stock','#8a6a3a',1,'item/stick'],['Faden','#eee',1,'item/string'],['Feder','#eee',1,'item/feather'],['Leder','#8a5a35',2,'item/leather'],['Kaninchenfell','#c8a070',2,'item/rabbit_hide'],['Papier','#f0f0f0',1,'item/paper'],['Buch','#8a5a35',3,'item/book'],['Verzaubertes Buch','#7a4ac8',60,'item/enchanted_book',1],['Tintenbeutel','#111',2,'item/ink_sac'],['Leuchttintenbeutel','#2aa8a0',4,'item/glow_ink_sac'],['Knochen','#e8e4d0',1,'item/bone'],['Knochenmehl','#f0f0f0',1,'item/bone_meal'],['Schießpulver','#555',3,'item/gunpowder'],['Schleimball','#7cc85a',3,'item/slime_ball'],['Feuerladung','#e8601a',4,'item/fire_charge'],['Lohenrute','#f5a623',8,'item/blaze_rod'],['Lohenpulver','#f5a623',4,'item/blaze_powder'],['Ghast-Träne','#e8f0f0',30,'item/ghast_tear'],['Enderperle','#1a6a5a',15,'item/ender_pearl',16],['Enderauge','#2a9a7a',25,'item/ender_eye'],['Netherstern','#e8f0f8',500,'item/nether_star'],['Shulkerschale','#a678a6',50,'item/shulker_shell'],['Phantommembran','#c8c8a0',10,'item/phantom_membrane'],['Feuerstein','#444',1,'item/flint'],['Tonball','#a0a6b3',1,'item/clay_ball'],['Ziegel','#9a4f3f',1,'item/brick'],['Netherziegel (Item)','#2f1519',1,'item/nether_brick'],['Nautilusschale','#d8c0a0',30,'item/nautilus_shell'],['Herz des Meeres','#2a8ad8',200,'item/heart_of_the_sea'],['Prismarinscherbe','#5ba6a0',3,'item/prismarine_shard'],['Prismarinkristalle','#a0e8d8',4,'item/prismarine_crystals'],['Hasenpfote','#c8a070',20,'item/rabbit_foot'],['Schildkrötenpanzer','#3a9a3a',10,'item/turtle_scute'],['Glasflasche','#c0e8f0',2,'item/glass_bottle'],['Erfahrungsfläschchen','#8ae83a',20,'item/experience_bottle'],['Magma-Creme','#a8421a',6,'item/magma_cream'],['Fermentiertes Spinnenauge','#8a2030',5,'item/fermented_spider_eye'],['Schmiedevorlage (Netherit)','#43393a',100,'item/netherite_upgrade_smithing_template'],['Drachenatem','#a040c8',20,'item/dragon_breath']]);
+L('Redstone & Transport',[['Redstone-Fackel','#d02020',3,'block/redstone_torch'],['Redstone-Verstärker','#8a8a8a',6,'item/repeater'],['Komparator','#8a8a8a',8,'item/comparator'],['Kolben','#a8834e',6,'block/piston_side'],['Klebriger Kolben','#7cc85a',10,'block/piston_top_sticky'],['Beobachter','#6f6f6f',8,'block/observer_front'],['Trichter','#444',8,'item/hopper'],['Spender','#7d7d7d',6,'block/dispenser_front'],['Werfer','#7d7d7d',5,'block/dropper_front'],['Lore','#aaa',10,'item/minecart',1],['Lore mit Truhe','#a06c20',16,'item/chest_minecart',1],['Schiene','#aaa',2,'block/rail'],['Antriebsschiene','#d9a441',6,'block/powered_rail'],['Detektorschiene','#c36a47',5,'block/detector_rail'],['Aktivierungsschiene','#a12722',5,'block/activator_rail'],['TNT','#d02020',12,'block/tnt_side'],['Hebel','#7d7d7d',2,'block/lever'],['Steinknopf','#7d7d7d',1,'block/stone'],['Steindruckplatte','#7d7d7d',2,'block/stone'],['Notenblock','#8a6232',6,'block/note_block'],['Plattenspieler','#6b5233',15,'block/jukebox_side'],['Redstone-Lampe','#f9d66b',10,'block/redstone_lamp'],['Stolperdraht-Haken','#8a6a3a',3,'block/tripwire_hook'],['Tageslichtsensor','#c8b078',8,'block/daylight_detector_top'],['Zielblock','#e8a0a0',6,'block/target_side'],['Blitzableiter','#c36a47',12,'block/lightning_rod'],['Fallenkiste','#a06c20',10,'block/oak_planks'],['Ender-Truhe','#150f26',60,'block/obsidian'],['Skulk-Sensor','#0a3a4a',20,'block/sculk_sensor_top']]);
+L('Deko & Sonstiges',[['Amboss','#444',30,'block/anvil'],['Zaubertisch','#a02040',60,'block/enchanting_table_top'],['Brauständer','#8a6a3a',15,'item/brewing_stand'],['Kessel','#444',8,'block/cauldron_side'],['Schmelzofen','#555',12,'block/blast_furnace_front'],['Räucherofen','#7a5a35',10,'block/smoker_front'],['Steinsäge','#777',8,'block/stonecutter_side'],['Schleifstein','#999',6,'block/grindstone_side'],['Webstuhl','#a8834e',6,'block/loom_front'],['Kartentisch','#7a5a35',6,'block/cartography_table_side1'],['Schmiedetisch','#444',10,'block/smithing_table_front'],['Lesepult','#a8834e',8,'block/lectern_front'],['Komposter','#7a5a35',4,'block/composter_side'],['Glocke','#f8d838',12,'item/bell'],['Leiter','#a8834e',1,'block/ladder'],['Gerüst','#c8b04a',3,'block/scaffolding_side'],['Rahmen','#a06c20',3,'item/item_frame'],['Leuchtrahmen','#2aa8a0',6,'item/glow_item_frame'],['Gemälde','#a06c20',3,'item/painting'],['Spinnennetz','#eee',3,'block/cobweb'],['Endstab','#fff',6,'block/end_rod'],['Endkristall','#c8a0e8',100,'item/end_crystal'],['Kanal (Conduit)','#5ba6a0',200,'item/conduit'],['Schildkrötenei','#e8e4d0',10,'block/turtle_egg']]);
+['13','cat','blocks','chirp','far','mall','mellohi','stal','strad','ward','11','wait','pigstep','otherside','5','relic','creator','precipice'].forEach(d=>G('Musik','Schallplatte '+d,'#2a2a2a',30,1,'item/music_disc_'+d));
 const cats=['Alle',...new Set(B.map(b=>b.c))];
 
 function texture(b){
@@ -237,10 +289,10 @@ function texture(b){
 const TEXBASE='textures/block/';
 const TEX={"Erde":"dirt","Grobe Erde":"coarse_dirt","Podsol":"podzol_top","Myzel":"mycelium_top","Sand":"sand","Roter Sand":"red_sand","Kies":"gravel","Ton":"clay","Schnee":"snow","Eis":"ice","Packeis":"packed_ice","Blaues Eis":"blue_ice","Schneeblock":"snow","Kürbis":"pumpkin_side","Melone":"melon_side","Heuballen":"hay_block_side","Moosblock":"moss_block","Schwamm":"sponge","Kaktus":"cactus_side","Honigblock":"honey_block_side","Schleimblock":"slime_block","Bienenstock":"beehive_side","Tropfstein":"dripstone_block","Stein":"stone","Bruchstein":"cobblestone","Moosiger Bruchstein":"mossy_cobblestone","Glatter Stein":"smooth_stone","Steinziegel":"stone_bricks","Granit":"granite","Diorit":"diorite","Andesit":"andesite","Tuffstein":"tuff","Deepslate":"deepslate","Obsidian":"obsidian","Weinende Obsidian":"crying_obsidian","Ziegelstein":"bricks","Sandstein":"sandstone","Roter Sandstein":"red_sandstone","Prismarin":"prismarine","Dunkler Prismarin":"dark_prismarine","Terrakotta":"terracotta","Beton (weiß)":"white_concrete","Beton (schwarz)":"black_concrete","Beton (rot)":"red_concrete","Beton (blau)":"blue_concrete","Beton (grün)":"green_concrete","Beton (gelb)":"yellow_concrete","Amethystblock":"amethyst_block","Kalkstein-Quarz":"quartz_block_side","Eichenstamm":"oak_log","Eichenbretter":"oak_planks","Birkenstamm":"birch_log","Birkenbretter":"birch_planks","Fichtenstamm":"spruce_log","Fichtenbretter":"spruce_planks","Dschungelstamm":"jungle_log","Dschungelbretter":"jungle_planks","Akazienstamm":"acacia_log","Akazienbretter":"acacia_planks","Schwarzeichenstamm":"dark_oak_log","Schwarzeichenbretter":"dark_oak_planks","Mangrovenbretter":"mangrove_planks","Kirschbretter":"cherry_planks","Bambusbretter":"bamboo_planks","Karmesin-Stamm":"crimson_stem","Wirr-Stamm":"warped_stem","Bücherregal":"bookshelf","Werkbank":"crafting_table_front","Fass":"barrel_side","Ofen":"furnace_front","Kohleerz":"coal_ore","Kohleblock":"coal_block","Eisenerz":"iron_ore","Eisenblock":"iron_block","Kupfererz":"copper_ore","Kupferblock":"copper_block","Goldblock":"gold_block","Golderz":"gold_ore","Redstone-Block":"redstone_block","Redstone-Erz":"redstone_ore","Lapislazuli-Block":"lapis_block","Lapis-Erz":"lapis_ore","Smaragdblock":"emerald_block","Smaragderz":"emerald_ore","Diamantblock":"diamond_block","Diamanterz":"diamond_ore","Netheritblock":"netherite_block","Antiker Schutt":"ancient_debris_side","Quarzblock":"quartz_block_side","Leuchtstein":"glowstone","Seelaterne":"sea_lantern","Leuchtfeuer":"beacon","Weiße Wolle":"white_wool","Orange Wolle":"orange_wool","Magenta Wolle":"magenta_wool","Hellblaue Wolle":"light_blue_wool","Gelbe Wolle":"yellow_wool","Limettenfarbene Wolle":"lime_wool","Rosa Wolle":"pink_wool","Graue Wolle":"gray_wool","Hellgraue Wolle":"light_gray_wool","Türkise Wolle":"cyan_wool","Violette Wolle":"purple_wool","Blaue Wolle":"blue_wool","Braune Wolle":"brown_wool","Grüne Wolle":"green_wool","Rote Wolle":"red_wool","Schwarze Wolle":"black_wool","Glas":"glass","Getöntes Glas":"tinted_glass","Glasscheibe":"glass","Laterne":"lantern","Fackel":"torch","Kerze":"candle","Teppich":"white_wool","Netherrack":"netherrack","Seelensand":"soul_sand","Seelenerde":"soul_soil","Magma-Block":"magma","Glowstone-Staub-Block":"glowstone","Netherziegel":"nether_bricks","Rote Netherziegel":"red_nether_bricks","Schwarzstein":"blackstone","Polierter Schwarzstein":"polished_blackstone","Basalt":"basalt_side","Warzenblock":"nether_wart_block","Wirrwarzenblock":"warped_wart_block","Endstein":"end_stone","Endsteinziegel":"end_stone_bricks","Purpurblock":"purpur_block","Purpursäule":"purpur_pillar","Endportalrahmen":"end_portal_frame_side","Drachenei":"dragon_egg","Spawner":"spawner","Befehlsblock":"command_block_front","Bedrock":"bedrock"};
 function loadTex(b,cv){
-  const id=TEX[b.n];if(!id)return;
+  const id=b.t||(TEX[b.n]&&'block/'+TEX[b.n]);if(!id)return;
   const im=new Image();
   im.onload=()=>{const w=im.naturalWidth;if(!w)return;const x=cv.getContext('2d');x.imageSmoothingEnabled=false;x.clearRect(0,0,16,16);x.drawImage(im,0,0,w,w,0,0,16,16)};
-  im.src=TEXBASE+id+'.png';
+  im.src='textures/'+id+'.png';
 }
 
 /* ---------- NexExpress ---------- */
@@ -249,8 +301,8 @@ function openShop(){
   openWin('shop','NexExpress – Alles aus Minecraft',`
   <div class="ie"><div class="mb"><span>Datei</span><span>Bearbeiten</span><span>Ansicht</span><span>Favoriten</span><span>Extras</span><span>?</span></div><div class="tbr"><button>◀ Zurück</button><button>▶</button><button>✕</button><button>⟳</button><button>🏠 Startseite</button></div><div class="adr">Adresse <div class="url">🌐 http://www.nexexpress.de/</div><button>Wechseln zu</button></div><div id="shop">
    <div class="nh"><div class="logo">nex<i>express</i><svg viewBox="0 0 92 11"><path d="M2 2q44 14 86 0" stroke="#ff9900" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
-   <input id="q" placeholder="Block suchen…"><button class="srch">Suchen</button>
-   <div class="wal">💎 <b id="em">${emeralds}</b></div><button class="srch" id="invb" style="margin:0;border-radius:4px">Meine Blöcke</button></div>
+   <input id="q" placeholder="Item oder Block suchen…"><button class="srch">Suchen</button>
+   <div class="wal">💎 <b id="em">${emeralds}</b></div><button class="srch" id="invb" style="margin:0;border-radius:4px">Meine Items</button></div>
    <div class="cats"></div><div class="inv" id="inv"></div><div class="grid"></div>
    </div><div class="ov"><div class="dlg"></div></div><div class="sb"><span>✔ Fertig</span><span>🌐 Internet</span></div></div>`,760,520,el=>{
     const g=$('.grid',el),ct=$('.cats',el);
@@ -258,13 +310,14 @@ function openShop(){
     ct.onclick=e=>{if(e.target.tagName!=='BUTTON')return;cat=e.target.textContent;ct.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===e.target));render()};
     $('#q',el).oninput=e=>{q=e.target.value.toLowerCase();render()};
     $('#invb',el).onclick=()=>{const i=$('#inv',el);i.classList.toggle('show');renderInv()};
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);loadTex(e.target._b,e.target)}}),{root:$('#shop',el),rootMargin:'200px'});
     function render(){
       g.innerHTML='';
       B.filter(b=>(cat==='Alle'||b.c===cat)&&b.n.toLowerCase().includes(q)).forEach(b=>{
         const d=document.createElement('div');d.className='card';
-        const cv=texture(b);d.appendChild(cv);loadTex(b,cv);
-        d.insertAdjacentHTML('beforeend',`<h4>${b.n}</h4><div class="pr">💎 ${b.p} <span class="vb">VB</span></div><div class="b"><button class="buy">Kaufen</button><button class="neg">Verhandeln</button></div><a class="rvl" href="#" data-n="${esc(b.n)}">☆ Bewertungen</a>`);
-        $('.buy',d).onclick=()=>purchase(b,b.p);
+        const cv=texture(b);d.appendChild(cv);cv._b=b;io.observe(cv);
+        d.insertAdjacentHTML('beforeend',`<h4>${b.n}</h4><div class="pr">💎 ${b.p} <span class="vb">VB</span><br><small style="font-weight:400;color:#565959">pro ${(b.s||64)>1?'Stack ('+(b.s||64)+')':'Stück'}</small></div><div class="b"><button class="buy">Kaufen</button><button class="neg">Verhandeln</button></div><a class="rvl" href="#" data-n="${esc(b.n)}">☆ Bewertungen</a>`);
+        $('.buy',d).onclick=()=>orderDialog(b,b.p);
         $('.rvl',d).onclick=e=>{e.preventDefault();openReviews(b)};
         $('.neg',d).onclick=()=>negotiate(b);
         g.appendChild(d);
@@ -274,7 +327,7 @@ function openShop(){
     }
     function renderInv(){
       const e=Object.entries(owned);
-      $('#inv',el).innerHTML='<b>Deine Blöcke:</b><br>'+(e.length?e.map(([n,c])=>`<span>${n} ×${c}</span>`).join(''):'Noch nichts gekauft.');
+      $('#inv',el).innerHTML='<b>Deine Items:</b><br>'+(e.length?e.map(([n,c])=>{const b=B.find(x=>x.n===n),s=b?(b.s||64):1,k=c/s;return `<span>${n} ×${c}${s>1?` (${k} Stack${k>1?'s':''})`:''}</span>`}).join(''):'Noch nichts gekauft.');
     }
     let revs=[];
     const updRv=()=>g.querySelectorAll('.rvl').forEach(a=>{const l=revs.filter(r=>r.item===a.dataset.n);a.textContent=l.length?`★ ${(l.reduce((t,r)=>t+r.stars,0)/l.length).toFixed(1)} (${l.length})`:'☆ Bewertungen'});
@@ -288,15 +341,35 @@ function openShop(){
       $('#bok',dl).onclick=ok;$('#bn',dl).onkeydown=e=>{if(e.key==='Enter')ok()};$('#bcl',dl).onclick=()=>ov.style.display='none';
       setTimeout(()=>$('#bn',dl).focus(),30);
     }
-    function purchase(b,price){
-      if(price>emeralds){toast('Zu wenig Smaragde. Verhandle oder such etwas Günstigeres.');return false}
-      askName(()=>{
-        if(price>emeralds)return;
-        emeralds-=price;owned[b.n]=(owned[b.n]||0)+1;$('#em',el).textContent=emeralds;renderInv();
-        store.add('orders',{name:buyerName,item:b.n,price,time:Date.now()}).catch(()=>toast('Bestellung konnte nicht gespeichert werden'));
-        toast(`${b.n} gekauft von ${buyerName} für ${price} Smaragde`);
-      });
+    function purchase(b,unit,n,note,name){
+      const total=unit*n,s=b.s||64;
+      if(total>emeralds){toast('Zu wenig Smaragde. Verhandle oder wähle weniger Stacks.');return false}
+      buyerName=name;emeralds-=total;owned[b.n]=(owned[b.n]||0)+n*s;$('#em',el).textContent=emeralds;renderInv();
+      store.add('orders',{name,item:b.n,price:total,unit,stacks:n,size:s,note,time:Date.now()}).catch(()=>toast('Bestellung konnte nicht gespeichert werden'));
+      toast(`${s>1?n+' Stack'+(n>1?'s':''):n+'×'} ${b.n} gekauft von ${name} für ${total} Smaragde`);
       return true;
+    }
+    function orderDialog(b,unit){
+      const ov=$('.ov',el),dl=$('.dlg',el),s=b.s||64;
+      dl.style.maxHeight='92%';dl.style.overflow='auto';
+      dl.innerHTML=`<b>Bestellung: ${esc(b.n)}</b>
+      <div style="display:flex;gap:10px;align-items:center"><div id="oc"></div><small>💎 ${unit} pro ${s>1?'Stack ('+s+' Stück)':'Stück'}${unit<b.p?' <span class="ver">(verhandelt, statt '+b.p+')</span>':''}</small></div>
+      <label>${s>1?'Anzahl Stacks':'Anzahl'}<div class="row"><button id="qm" style="flex:0 0 36px">−</button><input id="qn" type="number" min="1" max="1000" value="1" style="text-align:center"><button id="qp" style="flex:0 0 36px">+</button></div></label>
+      <div id="qi"></div>
+      <label>Dein Name<div class="row"><input id="bn" maxlength="30" value="${esc(buyerName)}" placeholder="Dein Name"></div></label>
+      <label>Beschreibung / Wunsch zur Bestellung<textarea id="bd" maxlength="300" rows="3" placeholder="z. B. Lieferung an Koordinaten, Verzauberung, Farbwunsch …" style="width:100%;padding:6px;border:1px solid #888;border-radius:4px;font:inherit;resize:vertical"></textarea></label>
+      <div class="row"><button id="ook">Bestellen</button><button id="ocl" style="background:#e7e9ec;border-color:#aaa">Abbrechen</button></div>`;
+      ov.style.display='grid';
+      const cv=texture(b);cv.style.cssText='width:56px;height:56px;image-rendering:pixelated';loadTex(b,cv);$('#oc',dl).appendChild(cv);
+      const qn=$('#qn',dl),qi=$('#qi',dl),get=()=>Math.min(1000,Math.max(1,parseInt(qn.value)||1));
+      const upd=()=>{const n=get(),t=n*unit;qi.innerHTML=`${s>1?`<b>${n} Stack${n>1?'s':''}</b> = ${n*s} Stück`:`<b>${n}×</b>`} · Gesamt: <b>💎 ${t}</b>${t>emeralds?' <span style="color:#c00">– zu wenig Smaragde</span>':''}`};
+      qn.oninput=upd;$('#qm',dl).onclick=()=>{qn.value=Math.max(1,get()-1);upd()};$('#qp',dl).onclick=()=>{qn.value=Math.min(1000,get()+1);upd()};upd();
+      $('#ocl',dl).onclick=()=>ov.style.display='none';
+      $('#ook',dl).onclick=()=>{
+        const name=$('#bn',dl).value.trim();
+        if(name.length<2){toast('Bitte einen Namen eingeben (mind. 2 Zeichen)');return}
+        if(purchase(b,unit,get(),$('#bd',dl).value.trim(),name))ov.style.display='none';
+      };
     }
     function openReviews(b){
       const ov=$('.ov',el),dl=$('.dlg',el);
@@ -335,7 +408,7 @@ function openShop(){
         <div class="row"><button id="cl" style="background:#e7e9ec;border-color:#aaa">Abbrechen</button></div>`;
       ov.style.display='grid';
       const ch=$('.chat',dl),say=(t,c)=>{const p=document.createElement('p');p.className=c;p.textContent=t;ch.appendChild(p);ch.scrollTop=1e9};
-      say(`Der ${b.n} kostet ${b.p} Smaragde VB. Was bietest du?`,'s');
+      say(`${(b.s||64)>1?'Ein Stack':'Ein Stück'} ${b.n} kostet ${b.p} Smaragde VB. Was bietest du (pro ${(b.s||64)>1?'Stack':'Stück'})?`,'s');
       let rounds=0;
       $('#cl',dl).onclick=()=>ov.style.display='none';
       $('#go',dl).onclick=()=>{
@@ -343,14 +416,14 @@ function openShop(){
         say(`Ich biete ${o}.`,'u');rounds++;
         if(o>=min){
           say(`Abgemacht! ${o} Smaragde.`,'s');
-          setTimeout(()=>{ov.style.display='none';purchase(b,Math.min(o,ask))},700);return;
+          setTimeout(()=>orderDialog(b,Math.min(o,ask)),700);return;
         }
         if(rounds>=4){say('Das wird nichts. Ich verkaufe an jemand anderen.','s');$('#go',dl).disabled=true;return}
         ask=Math.max(min+1,Math.round(ask-(ask-o)*.4));
         say(o<min*.6?`Das ist ein Witz. Ich kann auf ${ask} runtergehen.`:`Knapp. Wie wäre es mit ${ask}?`,'s');
         $('#off',dl).value='';
         const acc=document.createElement('p');acc.className='s';acc.innerHTML=`<a href="#" style="color:#007185">${ask} akzeptieren</a>`;
-        ch.appendChild(acc);acc.firstChild.onclick=e=>{e.preventDefault();ov.style.display='none';purchase(b,ask)};ch.scrollTop=1e9;
+        ch.appendChild(acc);acc.firstChild.onclick=e=>{e.preventDefault();orderDialog(b,ask)};ch.scrollTop=1e9;
       };
     }
     window.shopRender=render;render();loadRev();
@@ -387,7 +460,7 @@ function renderOrders(){
   if(ic)ic.lastChild.textContent=open?`Owner-Panel (${open})`:'Owner-Panel';
   const box=document.querySelector('#ol');if(!box)return;
   const l=[...orders].sort((a,b)=>(a.done?1:0)-(b.done?1:0)||b.time-a.time);
-  box.innerHTML=l.length?l.map(o=>`<div class="ord${o.done?' done':''}"><button class="ck" data-id="${esc(o.id)}" title="${o.done?'Wieder öffnen':'Als fertig markieren'}">${o.done?'✔':''}</button><span>${new Date(o.time).toLocaleTimeString('de-DE')} – <b>${esc(o.name)}</b> kauft ${esc(o.item)} (${esc(o.price)} 💎)</span></div>`).join(''):'Noch keine Bestellungen.';
+  box.innerHTML=l.length?l.map(o=>`<div class="ord${o.done?' done':''}"><button class="ck" data-id="${esc(o.id)}" title="${o.done?'Wieder öffnen':'Als fertig markieren'}">${o.done?'✔':''}</button><span>${new Date(o.time).toLocaleTimeString('de-DE')} – <b>${esc(o.name)}</b> kauft ${esc(o.stacks?(o.size>1?o.stacks+' Stack'+(o.stacks>1?'s':'')+' ('+o.stacks*o.size+' Stück) ':o.stacks+'× '):'')}${esc(o.item)} (${esc(o.price)} 💎)${o.note?'<br>📝 '+esc(o.note):''}</span></div>`).join(''):'Noch keine Bestellungen.';
   box.querySelectorAll('.ck').forEach(b=>b.onclick=async()=>{
     const o=orders.find(x=>x.id===b.dataset.id);if(!o)return;
     const v=!o.done;o.done=v;renderOrders();
@@ -435,9 +508,9 @@ function openOwner(){
   const opts=()=>B.map(b=>`<option>${b.n}</option>`).join('');
   openWin('owner','Owner-Panel – Nexor (CHEFFE)',`<div style="flex:1;overflow:auto;padding:12px;background:#ece9d8;font-size:12px;display:flex;flex-direction:column;gap:8px">
   <b>👑 Smaragde</b><div class="orow"><input id="oe" type="number" value="${emeralds}"><button id="oes">Setzen</button></div>
-  <b>Preis (VB) ändern</b><div class="orow"><select id="os">${opts()}</select><input id="op" type="number" min="1" placeholder="Neuer Preis"><button id="ops">Speichern</button></div>
-  <b>Neuer Block</b><div class="orow"><input id="nn" placeholder="Name"><input id="nc" type="color" value="#888888" style="flex:0 0 40px"></div>
-  <div class="orow"><select id="nk">${cats.slice(1).map(c=>`<option>${c}</option>`).join('')}</select><input id="np" type="number" min="1" placeholder="Preis"><button id="nb">Hinzufügen</button></div>
+  <b>Preis pro Stack (VB) ändern</b><div class="orow"><select id="os">${opts()}</select><input id="op" type="number" min="1" placeholder="Neuer Preis"><button id="ops">Speichern</button></div>
+  <b>Neuer Block / Item</b><div class="orow"><input id="nn" placeholder="Name"><input id="nc" type="color" value="#888888" style="flex:0 0 40px"></div>
+  <div class="orow"><select id="nk">${cats.slice(1).map(c=>`<option>${c}</option>`).join('')}</select><input id="np" type="number" min="1" placeholder="Preis/Stack"><select id="ns" style="flex:0 0 70px"><option value="64">×64</option><option value="16">×16</option><option value="1">×1</option></select><button id="nb">Hinzufügen</button></div>
   <b>🧾 Bestellungen <small>(live, alle 3 Sek.)</small></b><div id="ol" style="background:#fff;border:1px solid #888;padding:4px;max-height:200px;overflow:auto;min-height:40px">Lade…</div>
   <div class="orow"><button id="olr">Aktualisieren</button></div>
   <small>Preise/neue Blöcke: nur in deinem Browser. ${DB_URL?'Bestellungen &amp; Bewertungen liegen online.':'Ohne Online-Datenbank sind Bestellungen &amp; Bewertungen nur in diesem Browser sichtbar.'}</small></div>`,400,540,el=>{
@@ -447,7 +520,7 @@ function openOwner(){
     $('#ops',el).onclick=()=>{const b=B.find(b=>b.n===$('#os',el).value),p=parseInt($('#op',el).value);if(!b||!p||p<1)return;b.p=p;saveData();refresh();toast(`${b.n}: ${p} VB`)};
     $('#nb',el).onclick=()=>{const n=$('#nn',el).value.trim(),p=parseInt($('#np',el).value);
       if(!n||!p||p<1||B.some(b=>b.n===n))return toast('Name fehlt, Preis ungültig oder Name vergeben');
-      B.push({n,col:$('#nc',el).value,c:$('#nk',el).value,p,extra:1});saveData();refresh();$('#os',el).innerHTML=opts();toast(n+' hinzugefügt')};
+      B.push({n,col:$('#nc',el).value,c:$('#nk',el).value,p,s:+$('#ns',el).value,extra:1});saveData();refresh();$('#os',el).innerHTML=opts();toast(n+' hinzugefügt')};
   });
 }
 
